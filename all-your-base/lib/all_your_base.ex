@@ -33,12 +33,12 @@ defmodule AllYourBase do
   def valid_input_base(input_base) when input_base < 2,
     do: {:error, "input base must be >= 2"}
 
-  def valid_input_base(input_base), do: :ok
+  def valid_input_base(_input_base), do: :ok
 
   def valid_output_base(output_base) when output_base < 2,
     do: {:error, "output base must be >= 2"}
 
-  def valid_output_base(output_base), do: :ok
+  def valid_output_base(_output_base), do: :ok
 
   defp inputs_valid(list, input_base) do
     case Enum.all?(list, fn num -> num >= 0 and num < input_base end) do

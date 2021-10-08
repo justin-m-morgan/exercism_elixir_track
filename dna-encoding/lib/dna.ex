@@ -21,7 +21,7 @@ defmodule DNA do
 
   def decode(dna, decoded \\ [])
 
-  def decode("", decoded) do
+  def decode(<<hd::size(0)>>, decoded) do
     decoded
     |> Enum.map(&decode_nucleotide/1)
     |> Enum.reverse()

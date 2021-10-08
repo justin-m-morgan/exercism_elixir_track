@@ -11,15 +11,12 @@ defmodule WineCellar do
     cellar
     |> Enum.filter(fn {col, _wine} -> col == color end)
     |> Enum.map(fn {_col, wine} -> wine end)
-    |> maybe_filter_by_country(opts[:country])
-    |> maybe_filter_by_year(opts[:year])
+    |> maybe_filter(&filter_by_country/2, opts[:country])
+    |> maybe_filter(&filter_by_year/2, opts[:year])
   end
 
-  defp maybe_filter_by_year(wines, nil), do: wines
-  defp maybe_filter_by_year(wines, year), do: filter_by_year(wines, year)
-
-  defp maybe_filter_by_country(wines, nil), do: wines
-  defp maybe_filter_by_country(wines, country), do: filter_by_country(wines, country)
+  defp maybe_filter(wines, _fun, nil), do: wines
+  defp maybe_filter(wines, filter_fun, val), do: filter_fun.(wines, val)
 
   # The functions below do not need to be modified.
 
