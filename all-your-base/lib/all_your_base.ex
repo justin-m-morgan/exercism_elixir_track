@@ -41,18 +41,21 @@ defmodule AllYourBase do
   def valid_output_base(_output_base), do: :ok
 
   defp inputs_valid(list, input_base) do
-    case Enum.all?(list, fn num -> num >= 0 and num < input_base end) do
+    case Enum.all?(list, &valid_number?(&1, input_base) ) do
       true -> :ok
       false -> {:error, "all digits must be >= 0 and < input base"}
     end
+  end
+  defp valid_number?(num, input_base) do
+    num >= 0 and num < input_base
   end
 
   def convert_to_decimal(list, base) do
     list_length = length(list)
 
     list
+    |> Enum.reverse()
     |> Enum.with_index()
-    |> Enum.map(fn {val, i} -> {val, list_length - i - 1} end)
     |> Enum.reduce(0, fn {val, exponent}, acc -> acc + val * Integer.pow(base, exponent) end)
   end
 
